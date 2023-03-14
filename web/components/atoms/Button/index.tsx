@@ -1,17 +1,17 @@
-import { css } from "@emotion/react";
-import styled from "@emotion/styled";
-import Icon from "@web/components/atoms/Icon";
+import { css } from "@emotion/react"
+import styled from "@emotion/styled"
+import Icon from "@web/components/atoms/Icon"
 
 export type Props = {
-  text?: string;
-  icon?: string;
-  buttonStyle?: "primary" | "secondary";
-  status?: string;
-  disabled?: boolean;
-  width?: number;
-  extendWidth?: boolean;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-};
+  text?: string
+  icon?: string
+  buttonStyle?: "primary" | "secondary"
+  status?: string
+  disabled?: boolean
+  width?: number
+  extendWidth?: boolean
+  onClick?: (e: React.MouseEvent<HTMLButtonElement>) => void
+}
 
 const Button: React.FC<Props> = ({
   text,
@@ -39,15 +39,15 @@ const Button: React.FC<Props> = ({
       )}
       <TextWrapper>{text}</TextWrapper>
     </StyledButton>
-  );
-};
+  )
+}
 
 const StyledButton = styled.button<{
-  buttonStyle: string;
-  status: string;
-  disabled: boolean;
-  width?: number;
-  extendWidth: boolean;
+  buttonStyle: string
+  status: string
+  disabled: boolean
+  width?: number
+  extendWidth: boolean
 }>`
   position: relative;
   display: flex;
@@ -75,14 +75,14 @@ const StyledButton = styled.button<{
         background: none;
         color: ${props.theme.colors.primary};
         border-color: ${props.theme.colors.primary};
-      `;
+      `
     } else {
       // primary
       return css`
         background: ${props.theme.colors.primary};
         color: ${props.theme.fontColors.primary};
         border-color: ${props.theme.colors.primary};
-      `;
+      `
     }
   }};
 
@@ -92,7 +92,7 @@ const StyledButton = styled.button<{
         background: ${props.theme.colors.primary};
         color: ${props.theme.fontColors.primary};
         border-color: ${props.theme.colors.primary};
-      `;
+      `
     }
   }};
 
@@ -102,7 +102,7 @@ const StyledButton = styled.button<{
         background: none;
         color: ${props.theme.colors.disabled};
         border-color: ${props.theme.colors.disabled};
-      `;
+      `
       // if (props.buttonStyle === "secondary") {
       //   return css`
       //     background: none;
@@ -127,7 +127,7 @@ const StyledButton = styled.button<{
             background: ${props.theme.colors.primary};
             color: ${props.theme.fontColors.primary};
             border-color: ${props.theme.colors.primary};
-          `;
+          `
         } else {
           // primary
           return css`
@@ -144,22 +144,22 @@ const StyledButton = styled.button<{
                 ? "rgba(255,255,255,.05)"
                 : "rgba(255,255,255,.05)"};
             }
-          `;
+          `
         }
       }};
     }
   }
-`;
+`
 
 const TextWrapper = styled.div`
   position: relative;
   z-index: 2;
-`;
+`
 
 const IconArea = styled.div`
   display: flex;
   align-items: center;
   margin-right: 5px;
-`;
+`
 
-export default Button;
+export default Button

@@ -25,7 +25,7 @@
     "zip": "node ./scripts/zip.mjs",
     "createwidget": "node ./scripts/createwidget.mjs",
     "clean": "del dist",
-    "start:spaceid": "vite -c vite.config.spaceid-web.ts",
+    "start": "vite -c vite.config.spaceid-web.ts",
     "build:spaceid": "vite build -c vite.config.spaceid.ts",
     "build:spaceid-web": "vite build -c vite.config.spaceid-web.ts"
   },
