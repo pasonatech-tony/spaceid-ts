@@ -1,0 +1,21 @@
+name: Space ID
+version: 0.1.4
+id: reearth-plugin-space-id
+extensions:
+  - id: spaceid
+    type: widget
+    name: Space ID
+    widgetLayout:
+      defaultLocation:
+        zone: outer
+        section: left
+        area: top
+    schema:
+      groups:
+        - id: default
+          title: default
+          fields:
+            - id: spaceUrl
+              type: url
+              title: Upload File
+              ui: file
