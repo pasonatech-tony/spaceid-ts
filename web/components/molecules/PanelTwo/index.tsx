@@ -12,12 +12,27 @@ type Props = {
 }
 const PanelOne: React.FC<Props> = ({ onResize }) => {
   const initialFormFields: FormField[] = [
-    { attr: "pop_sex_code_1", value: "0", color: "#ffffff", operator: ">=" },
+    {
+      attr: "pop_sex_code_1",
+      value: "0",
+      color: "#ffffff",
+      hex: "#ffffff",
+      operator: ">=",
+    },
   ]
   const [formFields, setFormFields] = useState<FormField[]>(initialFormFields)
-  const [selectedColor, setSelectedColor] = useState<string>(
-    initialFormFields[0].color
+  const [selectedColors, setSelectedColors] = useState<string[]>(
+    initialFormFields.map((field) => field.color)
   )
+  const handleColorChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    index: number
+  ) => {
+    const newColors = [...selectedColors]
+    newColors[index] = event.target.value
+
+    setSelectedColors(newColors)
+  }
   const handleFormChange = useCallback(
     (
       event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -26,7 +41,11 @@ const PanelOne: React.FC<Props> = ({ onResize }) => {
       const data = [...formFields]
       const { value } = event.target
       if (value === "color") {
-        setSelectedColor(value)
+        setSelectedColors([
+          ...selectedColors.slice(0, index),
+          value,
+          ...selectedColors.slice(index + 1),
+        ])
       }
 
       const isValidHex = /^#([A-Fa-f0-9]{3}){1,2}$/.test(value)
@@ -54,17 +73,22 @@ const PanelOne: React.FC<Props> = ({ onResize }) => {
       operator: ">=",
     }
     setFormFields([...formFields, object])
+    setSelectedColors([...selectedColors, "#ffffff"])
   }
   const removeFields = (index: number) => {
     const data = [...formFields]
     data.splice(index, 1)
     setFormFields(data)
+    setSelectedColors([
+      ...selectedColors.slice(0, index),
+      ...selectedColors.slice(index + 1),
+    ])
   }
 
   const removeAllCondition = () => {
     console.log("remove all condition")
     setFormFields(initialFormFields)
-    setSelectedColor("#ffffff")
+    setSelectedColors(initialFormFields.map((field) => field.color))
   }
 
   const applyAllCondition = () => {
@@ -127,21 +151,23 @@ const PanelOne: React.FC<Props> = ({ onResize }) => {
               />
               <InputCol
                 type="color"
-                name="color"
+                name={`color-${index}`}
                 value={form.color}
                 onChange={(event) => {
                   handleFormChange(event, index)
-                  setSelectedColor(event.target.value)
+                  handleColorChange(event, index)
                 }}
               />
               <InputHex
+                key={`input-hex-${index}`}
                 type="text"
-                value={selectedColor}
-                onChange={(event) => setSelectedColor(event.target.value)}
+                name={`hex-${index}`}
+                value={selectedColors[index]}
+                onChange={(event) => handleColorChange(event, index)}
                 onKeyPress={(event) => {
                   if (event.key === "Enter") {
                     event.preventDefault()
-                    setSelectedColor(event.target.value)
+                    handleColorChange(event, index)
                     handleFormChange(event, index)
                   }
                 }}
@@ -234,17 +260,20 @@ const InputVal = styled.input`
 
 const InputCol = styled.input`
   width: 10px;
-  height: 32px;
+
   border: none;
   outline: none;
   padding: 0;
   margin: 0;
+  margin-top: -11px;
   border-radius: 4px;
   &::-webkit-color-swatch-wrapper {
     border-radius: 4px;
   }
   &::-webkit-color-swatch {
     border-radius: 4px;
+    height: 28px;
+    border: 1px solid #ccc;
   }
 `
 

@@ -1,18 +1,19 @@
-import styled from "@emotion/styled";
-import Icon from "@web/components/atoms/Icon";
-import { useCallback, useState, useRef, useEffect } from "react";
+import styled from "@emotion/styled"
+import Button from "@web/components/atoms/Button"
+import Icon from "@web/components/atoms/Icon"
+import { useCallback, useState, useRef, useEffect } from "react"
 
 export type Props = {
-  title: string;
-  icon: string;
-  children?: React.ReactNode;
+  title: string
+  icon: string
+  children?: React.ReactNode
 
-  cellSize?: number;
-  fullWidth?: number;
-  ref?: any;
-  onResize?: (width: number, height: number) => void;
-  onFoldChange?: (active: boolean) => void;
-};
+  cellSize?: number
+  fullWidth?: number
+  ref?: any
+  onResize?: (width: number, height: number) => void
+  onFoldChange?: (active: boolean) => void
+}
 
 const Panel: React.FC<Props> = ({
   title,
@@ -23,30 +24,30 @@ const Panel: React.FC<Props> = ({
   cellSize = 44,
   fullWidth = 312,
 }) => {
-  const [folded, setFolded] = useState(true);
-  const [width, setWidth] = useState(cellSize);
-  const [height, setHeight] = useState(cellSize);
+  const [folded, setFolded] = useState(true)
+  const [width, setWidth] = useState(cellSize)
+  const [height, setHeight] = useState(cellSize)
 
-  const content = useRef<HTMLDivElement>(null);
-  const wrapper = useRef<HTMLDivElement>(null);
+  const content = useRef<HTMLDivElement>(null)
+  const wrapper = useRef<HTMLDivElement>(null)
 
   const toggleFolded = useCallback(() => {
-    setFolded(!folded);
-    onFoldChange?.(folded);
-  }, [folded, onFoldChange]);
+    setFolded(!folded)
+    onFoldChange?.(folded)
+  }, [folded, onFoldChange])
 
   useEffect(() => {
     if (folded) {
-      setHeight(cellSize);
-      setWidth(cellSize);
-      onResize?.(cellSize, cellSize);
+      setHeight(cellSize)
+      setWidth(cellSize)
+      onResize?.(cellSize, cellSize)
     } else {
       const fullHeight = content.current
         ? content.current.clientHeight + cellSize
-        : cellSize;
-      setHeight(fullHeight);
-      setWidth(fullWidth);
-      onResize?.(fullWidth, fullHeight);
+        : cellSize
+      setHeight(fullHeight)
+      setWidth(fullWidth)
+      onResize?.(fullWidth, fullHeight)
     }
   }, [
     folded,
@@ -55,7 +56,7 @@ const Panel: React.FC<Props> = ({
     onResize,
     content.current?.clientWidth,
     content.current?.clientHeight,
-  ]);
+  ])
 
   return (
     <Wrapper ref={wrapper} width={width} height={height}>
@@ -74,8 +75,8 @@ const Panel: React.FC<Props> = ({
         <Content ref={content}>{children}</Content>
       </FixArea>
     </Wrapper>
-  );
-};
+  )
+}
 
 const Header = styled.div<{ height?: number }>`
   height: ${({ height }) => height}px;
@@ -84,12 +85,12 @@ const Header = styled.div<{ height?: number }>`
   justify-content: space-between;
   padding: 12px 0;
   user-select: none;
-`;
+`
 
 const HeaderInfo = styled.div`
   display: flex;
   flex-wrap: nowrap;
-`;
+`
 
 const IconArea = styled.div<{ width?: number }>`
   width: ${({ width }) => width}px;
@@ -99,21 +100,21 @@ const IconArea = styled.div<{ width?: number }>`
   flex-shrink: 0;
   color: ${(props) => props.theme.colors.main};
   cursor: pointer;
-`;
+`
 
 const Title = styled.div`
   font-size: 14px;
   font-weight: 700;
   line-height: 20px;
   color: ${(props) => props.theme.colors.main};
-`;
+`
 
 const Content = styled.div`
   padding: 0 12px 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-`;
+`
 
 const Wrapper = styled.div<{ width?: number; height?: number }>`
   position: relative;
@@ -123,11 +124,11 @@ const Wrapper = styled.div<{ width?: number; height?: number }>`
   color: #c7c5c5;
   border-radius: 4px;
   overflow: hidden;
-`;
+`
 
 const FixArea = styled.div<{ width?: number }>`
   position: absolute;
   width: ${({ width }) => width}px;
-`;
+`
 
-export default Panel;
+export default Panel

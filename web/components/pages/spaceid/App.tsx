@@ -164,7 +164,7 @@ const App = () => {
                   ")"
                 }
                 folder
-                key={key + "abc"}
+                key={`${key} + "abc"`}
                 onResize={forceUpdate}
                 mainContent={
                   <>
@@ -175,7 +175,7 @@ const App = () => {
                           <DropdownBox
                             title={Object.keys(value)[key]}
                             folder
-                            key={key + "123"}
+                            key={`${key} + "123"`}
                             onResize={forceUpdate}
                             mainContent={
                               <Table>
@@ -183,7 +183,7 @@ const App = () => {
                                   item as Record<string, any>
                                 )[1].map((v: any, k: number) => (
                                   <Row
-                                    key={k + "xyz"}
+                                    key={`${k} + "xyz"`}
                                     row1={Object.keys(v)[k]}
                                     row2={
                                       (value as Record<string, any>)[
